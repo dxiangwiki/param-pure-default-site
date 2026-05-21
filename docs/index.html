@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Param Pure Default - JS默认参数溯源工具</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        main: '#165DFF',
+                        dark: '#1E293B'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {scroll-behavior: smooth;}
+        .code-block {
+            background: #1E293B;
+            color: #e5e7eb;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+<nav class="bg-white shadow-sm sticky top-0 z-10">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold text-main">Param Pure Default</h1>
+        <div class="flex gap-6">
+            <a href="#intro" class="hover:text-main">介绍</a>
+            <a href="#install" class="hover:text-main">安装</a>
+            <a href="#usage" class="hover:text-main">使用</a>
+            <a href="#principle" class="hover:text-main">原理</a>
+            <a href="https://www.npmjs.com/package/param-pure-default" target="_blank" class="text-main"><i class="fa fa-npm mr-1"></i>NPM</a>
+        </div>
+    </div>
+</nav>
+
+<header class="bg-gradient-to-r from-main to-blue-400 text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-[2.5rem] font-bold mb-4">精准溯源 JS 函数默认参数</h2>
+        <p class="text-lg opacity-90 max-w-2xl mx-auto">
+            彻底解决原生JS无法区分「手动传入同值」与「自动默认值」痛点
+        </p>
+        <div class="mt-8 flex justify-center gap-4">
+            <a href="https://www.npmjs.com/package/param-pure-default" target="_blank" class="bg-white text-main px-6 py-3 rounded-lg font-medium">
+                <i class="fa fa-download mr-2"></i>前往 NPM 安装
+            </a>
+            <a href="https://github.com/dxiangwiki/param-pure-default" target="_blank" class="border border-white px-6 py-3 rounded-lg font-medium">
+                <i class="fa fa-github mr-2"></i>GitHub 源码
+            </a>
+        </div>
+    </div>
+</header>
+
+<section id="intro" class="py-16 container mx-auto px-4">
+    <h3 class="text-2xl font-bold text-center mb-10">工具核心作用</h3>
+    <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+            <div class="text-main text-3xl mb-3"><i class="fa fa-check-circle"></i></div>
+            <h4 class="font-semibold text-lg mb-2">精准判定来源</h4>
+            <p class="text-gray-600">无论数值是否相同，都能准确判断参数是用户传入，还是使用默认值。</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+            <div class="text-main text-3xl mb-3"><i class="fa fa-feather"></i></div>
+            <h4 class="font-semibold text-lg mb-2">轻量无依赖</h4>
+            <p class="text-gray-600">纯 ESM 模块化，体积 <1KB，支持所有现代前端环境。</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+            <div class="text-main text-3xl mb-3"><i class="fa fa-shield"></i></div>
+            <h4 class="font-semibold text-lg mb-2">状态安全隔离</h4>
+            <p class="text-gray-600">每次调用自动重置，不污染、不串状态，长期稳定可靠。</p>
+        </div>
+    </div>
+</section>
+
+<section id="install" class="py-16 bg-white">
+    <div class="container mx-auto px-4">
+        <h3 class="text-2xl font-bold text-center mb-8">快速安装</h3>
+        <div class="max-w-2xl mx-auto code-block p-4">
+<pre>npm install param-pure-default</pre>
+        </div>
+    </div>
+</section>
+
+<section id="usage" class="py-16 container mx-auto px-4">
+    <h3 class="text-2xl font-bold text-center mb-8">基础使用示例</h3>
+    <div class="max-w-3xl mx-auto code-block p-5">
+<pre>import ParamDefaultTrack from 'param-pure-default'
+
+const track = new ParamDefaultTrack()
+
+function showNum(num = track.setDefault(5)) {
+    if(track.isDefault()){
+        console.log('默认值：', num)
+    }else{
+        console.log('用户传入：', num)
+    }
+    track.reset()
+}
+
+showNum(10)  // 用户传入
+showNum()    // 默认值
+showNum(5)   // 用户传入
+</pre>
+    </div>
+</section>
+
+<section id="principle" class="py-16 bg-dark text-white">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <h3 class="text-2xl font-bold text-center mb-10">底层核心实现原理</h3>
+        <div class="space-y-6 text-gray-200 leading-relaxed">
+            <p>1. <strong class="text-blue-300">默认参数短路执行</strong><br>
+            用户传参 → 默认值不执行<br>
+            用户不传 → 默认值自动执行</p>
+            <p>2. <strong class="text-blue-300">函数调用留痕</strong><br>
+            使用 setDefault() 代替固定值，执行时自动标记状态。</p>
+            <p>3. <strong class="text-blue-300">状态溯源判定</strong><br>
+            不比较数值，只看是否执行过默认逻辑。</p>
+            <p>4. <strong class="text-blue-300">动态规划思想</strong><br>
+            只追踪“是否走默认路径”这一核心状态，剥离无关判断，极简且绝对可靠。</p>
+        </div>
+    </div>
+</section>
+
+<footer class="py-8 text-center text-gray-500 bg-white">
+    <p>Param Pure Default © 2026 董翔</p>
+    <p class="mt-2">邮箱：3631247406@qq.com</p>
+    <p class="mt-2">NPM：<a href="https://www.npmjs.com/package/param-pure-default" class="text-main">param-pure-default</a></p>
+    <p class="mt-2">GitHub：<a href="https://github.com/dxiangwiki" class="text-main">github.com/dxiangwiki</a></p>
+</footer>
+</body>
+</html>

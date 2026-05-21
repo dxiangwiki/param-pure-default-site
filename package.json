@@ -1,0 +1,33 @@
+{
+  "name": "param-pure-default",
+  "version": "1.0.0",
+  "description": "精准判断函数参数是用户主动传入，还是使用默认值，解决JS原生无法区分同值默认参数痛点",
+  "type": "module",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [
+    "param",
+    "default-value",
+    "function-args",
+    "detect-params",
+    "js-tool",
+    "参数默认值检测"
+  ],
+  "author": "董翔 <3631247406@qq.com>",
+  "license": "MIT",
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dongxiang678/param-pure-default"
+  },
+  "engines": {
+    "node": ">=14.13.0"
+  }
+}
